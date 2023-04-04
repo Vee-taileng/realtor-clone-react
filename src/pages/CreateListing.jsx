@@ -9,12 +9,12 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore"
-import {db} from "../firebase"
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase";
 import { useNavigate } from "react-router";
 
 export default function CreateListing() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const auth = getAuth();
   const [geolocationEnabled, setGeolocationEnbled] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -142,13 +142,13 @@ export default function CreateListing() {
                 break;
               default:
                 break;
-            };
+            }
             return null;
           },
           (error) => {
             // A full list of error codes is available at
             // https://firebase.google.com/docs/storage/web/handle-errors
-            reject(error)
+            reject(error);
           },
           () => {
             // Upload completed successfully, now we can get the download URL
@@ -160,30 +160,28 @@ export default function CreateListing() {
       });
     }
     const imgUrls = await Promise.all(
-      [...images]
-        .map((image) => storeImage(image))
-        )
-        .catch((error) => {
-          setLoading(false);
-          toast.error("Images could not be uploaded!");
-          return [];
-        })
-    
+      [...images].map((image) => storeImage(image))
+    ).catch((error) => {
+      setLoading(false);
+      toast.error("Images could not be uploaded!");
+      return [];
+    });
+
     const formDataCopy = {
       ...formData,
       imgUrls,
       geolocation,
       timestamp: serverTimestamp(),
-      userRef: auth.currentUser.uid
+      userRef: auth.currentUser.uid,
     };
     delete formDataCopy.images;
     !formData.offer && delete formDataCopy.discountPrice;
     delete formDataCopy.latitude;
-    delete formDataCopy.longitude
+    delete formDataCopy.longitude;
     const docRef = await addDoc(collection(db, "listings"), formDataCopy);
     setLoading(false);
-    toast.success("Listings created")
-    navigate(`/category/${formDataCopy.type}/${docRef.id}`)
+    toast.success("Listings created");
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   }
 
   // Insert Loading Component to Create Listing Page
@@ -230,7 +228,7 @@ export default function CreateListing() {
           value={name}
           onChange={onChange}
           placeholder="Name"
-          maxLength="32"
+          maxLength="50"
           minLength="10"
           required
           className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded

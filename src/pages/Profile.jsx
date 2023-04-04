@@ -151,8 +151,13 @@ const Profile = () => {
       <div className="max-w-6xl px-3 mx-auto mt-6">
         {!loading && listings.length > 0 && (
           <>
-            <h2 className="text-3xl text-center font-semibold">My Listings</h2>
-            <ul>
+            <h2 className="text-3xl text-center font-semibold mb-6">
+              My Listings
+            </h2>
+            <ul
+              className="sm:grid sm:grid-cols-2 lg:grid-cols-3 
+            xl:grid-cols-4 mt-6 mb-6"
+            >
               {listings.map((listing) => (
                 <ListingItems
                   key={listing.id}
