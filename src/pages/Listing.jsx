@@ -19,12 +19,16 @@ import {
   FaParking,
   FaChair,
 } from "react-icons/fa";
+import { getAuth } from "firebase/auth";
+import Contact from "../component/Contact";
 
 export default function Listing() {
   const params = useParams();
+  const auth = getAuth();
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
+  const [contactLandlord, setContactLandlord] = useState(false);
 
   SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -93,7 +97,7 @@ export default function Listing() {
         className="m-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto p-4 rounded shadow-lg
       bg-white lg:space-x-5"
       >
-        <div className="w-full h-[200px] lg-[400px] ">
+        <div className="w-full lg-[400px] ">
           <p
             className="text-2xl font-bold mb-3 text-blue-900
           "
@@ -119,18 +123,16 @@ export default function Listing() {
             >
               {listing.type === "rent" ? "For Rent" : "For Sale"}
             </p>
-            <p
-              className="bg-green-800 w-full max-w-[200px] rounded-md p-1
+            {listing.offer && (
+              <p
+                className="bg-green-800 w-full max-w-[200px] rounded-md p-1
             text-white text-center font-semibold shadow-md"
-            >
-              {listing.offer && (
-                <p>
-                  ${+listing.regularPrice - +listing.discountedPrice} discount
-                </p>
-              )}
-            </p>
+              >
+                ${+listing.regularPrice - +listing.discountedPrice} discount
+              </p>
+            )}
           </div>
-          <p className="my-3">
+          <p className="my-6">
             <span className="font-semibold">Description - </span>
             {listing.description}
           </p>
@@ -152,10 +154,25 @@ export default function Listing() {
               {listing.furnished ? "Furnished" : "Not furnished"}
             </li>
           </ul>
+          {listing.userRef !== auth.currentUser?.uid && !contactLandlord && (
+            <div className="mt-6">
+              <button
+                onClick={() => setContactLandlord(true)}
+                className="px-7 py-3 bg-blue-600 w-full font-medium 
+            text-white text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg
+            transition ease-in-out duration-200"
+              >
+                Contact Landlord
+              </button>
+            </div>
+          )}
+          {contactLandlord && (
+            <Contact userRef={listing.userRef} listing={listing} />
+          )}
         </div>
         <div
-          className="w-full h-[200px] lg-[400px]
-        z-10 overflow-x-hidden"
+          className="w-full h-[200px] bg-blue-200 lg-[400px]
+        z-10 overflow-x-hidden w-full"
         ></div>
       </div>
     </main>
