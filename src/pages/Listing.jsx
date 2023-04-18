@@ -21,7 +21,7 @@ import {
 } from "react-icons/fa";
 import { getAuth } from "firebase/auth";
 import Contact from "../component/Contact";
-// import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 export default function Listing() {
   const params = useParams();
@@ -105,7 +105,7 @@ export default function Listing() {
           >
             {listing.name} - ${" "}
             {listing.offer
-              ? listing.discountedPrice
+              ? listing.discountPrice
                   ?.toString()
                   ?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
               : listing.regularPrice
@@ -129,7 +129,7 @@ export default function Listing() {
                 className="bg-green-800 w-full max-w-[200px] rounded-md p-1
             text-white text-center font-semibold shadow-md"
               >
-                ${+listing.regularPrice - +listing.discountedPrice} discount
+                $ {+listing.regularPrice - +listing.discountPrice} discount
               </p>
             )}
           </div>
@@ -172,7 +172,7 @@ export default function Listing() {
           )}
         </div>
         <div className="w-full h-[200px] md:h-[400px] z-10 overflow-x-hidden w-full mt-6 md:mt-0">
-          {/* <MapContainer
+          <MapContainer
             center={[listing.geolocation.lat, listing.geolocation.lng]}
             zoom={13}
             scrollWheelZoom={false}
@@ -189,20 +189,7 @@ export default function Listing() {
                 A pretty CSS3 popup. <br /> Easily customizable.
               </Popup>
             </Marker>
-          </MapContainer> */}
-          <div>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3777.2002752165554!2d98.98354871028207!3d18.789225982283632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30da3a99704adc77%3A0x589a1967750a68f4!2sEstia%20Chiang%20Mai%20Hotel!5e0!3m2!1sen!2sth!4v1681405665856!5m2!1sen!2sth"
-              width="600"
-              height="450"
-              style={{ border: "0" }}
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-            >
-              Location
-            </iframe>
-          </div>
+          </MapContainer>
         </div>
       </div>
     </main>

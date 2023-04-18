@@ -38,7 +38,7 @@ export default function ListingItems({ listing, id, onEdit, onDelete }) {
           <p className="text-[#457b93] mt-2 font-semibold">
             $
             {listing.offer
-              ? listing.discountedPrice
+              ? listing.discountPrice
                   ?.toString()
                   ?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
               : listing.regularPrice

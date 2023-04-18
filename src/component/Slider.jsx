@@ -76,7 +76,7 @@ export default function Slider() {
                 className="text-[#f1faee] absolute left-1 bottom-3 font-semibold
               max-w-[90%] bg-[#e63946] shadow-lg opacity-90 p-2 rounded"
               >
-                {data.discountedPrice
+                {data.discountPrice
                   ?.toString()
                   ?.replace(/\B(?=(\d{3})+(?!\d))/g, ",") ??
                   data.regularPrice
