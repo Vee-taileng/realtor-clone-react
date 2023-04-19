@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import CreateListing from "./pages/CreateListing";
 import EditListing from "./pages/EditListing.jsx"
 import Listing from "./pages/Listing";
+import Category from "./pages/Category";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/offers" element={<Offers />} />
+          <Route path="/category/:categoryName" element={<Category />} />
           <Route
             path="/category/:categoryName/:listingId"
             element={<Listing />}
